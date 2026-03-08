@@ -1,0 +1,35 @@
+{
+  "name": "Anti-Pattern Database",
+  "version": "1.0",
+  "beschreibung": "Fehlgeschlagene Vorhersagen - 3x wertvoller als Erfolge",
+  "gewichtung": 3,
+  
+  "anti_patterns": [],
+  
+  "statistik": {
+    "gesamt": 0,
+    "oberflaeche": 0,
+    "kontext": 0,
+    "strukturell": 0,
+    "meta": 0,
+    "philosophisch": 0
+  },
+  
+  "template": {
+    "id": "uuid",
+    "zeitstempel": "ISO8601",
+    "vorhersage": "Was ich dachte",
+    "realitaet": "Was passiert ist",
+    "konfidenz_vorher": 0.8,
+    "ebene": "oberflaeche|kontext|strukturell|meta|philosophisch",
+    "analyse": "Warum lag ich falsch?",
+    "lektion": "Was lernen wir daraus?",
+    "verifiziert": false
+  },
+  
+  "naechste_schritte": [
+    "Erste Fehler erfassen und analysieren",
+    "Gewichtung überprüfen nach 10 Einträgen",
+    "Pattern in Prediction-Rules integrieren"
+  ]
+}

@@ -33,9 +33,11 @@ services:
       - "8001:8000"
     environment:
       - MEM0_STORE_TYPE=postgres
-      - MEM0_EMBEDDING_MODEL=openai
+      - MEM0_EMBEDDING_MODEL=ollama
       - MEM0_VECTOR_STORE=qdrant
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-placeholder}
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_MODEL=nomic-embed-text
+      - MEM0_API_KEY=${MEM0_API_KEY:-m0-mTG6s7FdqBkztj9vwZArzjVQeCyZqH4yel4wJdd4}
       - MEM0_USER_ID=oli
       - MEM0_AGENT_ID=viveka
     volumes:

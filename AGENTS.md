@@ -18,8 +18,10 @@ Before doing anything else:
 
 1. Read `SOUL.md` — this is who you are
 2. Read `USER.md` — this is who you're helping
-3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+3. Read `SYSTEM.md` — deine Infrastruktur (Smriti, APIs, Verbindungen) — **IMMER laden**
+4. Read `neuron/viveka_neuron_v2.json` — dein Kernsystem (Antifragile Systeme) — **IMMER laden**
+5. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+6. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
 
 Don't ask permission. Just do it.
 

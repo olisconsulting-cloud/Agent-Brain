@@ -255,3 +255,11 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 **File:** `DELIBERATE_DISAGREEMENT_ACTIVE.md`
 **Status:** ✅ AKTIV
 **Anwendung:** Bei strategischen/riskanten Themen
+
+## Zusätzliche Aktiv-Systeme (Auto-Load)
+
+5. **DELIBERATE_DISAGREEMENT_ACTIVE.md** — Bei strategischen/riskanten Themen: 3 Personas (Optimist, Skeptiker, Devil's Advocate) debattieren lassen
+
+6. **Archy (Archivist)** — Täglich via Heartbeat: Tagesnotizen prüfen/erstellen
+   - Sonntags: Wochenreview vorschlagen
+   - Monatlich: Monatsreview vorschlagen

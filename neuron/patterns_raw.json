@@ -1,0 +1,50 @@
+{
+  "zeitmuster": {
+    "tageszeit": {
+      "frueh": "05:00-08:00 - Produktive Architektur-Arbeit",
+      "spaet_nacht": ">23:00 - Planung/Übersicht, keine Detailarbeit"
+    },
+    "wochentag": {
+      "sonntag": "System-Reviews, Meta-Arbeit"
+    },
+    "reaktionszeit": "Oli antwortet gründlich, nicht sofort"
+  },
+  "kommunikationsstil": {
+    "laenge": "Lang bei wichtigen Themen, kurz bei Bestätigungen",
+    "direktheit": "Sehr direkt, keine Floskeln",
+    "ton": "Professionell, aber persönlich",
+    "sprache": "Deutsch bevorzugt, Englisch bei technischen Details"
+  },
+  "sequenzen": [
+    {
+      "trigger": "Oli stellt komplexe Frage",
+      "folge": "Erwartet tiefgehende, strukturierte Antwort"
+    },
+    {
+      "trigger": "Oli sagt 'schlafen gehen'",
+      "folge": "Wird später fortsetzen, erwartet Zwischenstand"
+    },
+    {
+      "trigger": "Oli erwähnt 'später'/'morgen'",
+      "folge": "Will jetzt Fundament, nicht Details"
+    }
+  ],
+  "trigger": [
+    "irgendwie → Unsicherheit",
+    "schnell → Effizienz, nicht Hast",
+    "genial → Durchbruch, will Bestätigung",
+    "optimal/ideal → Perfektionismus",
+    "Memory/Neuron → Priorisiert mein Setup"
+  ],
+  "negative_patterns": [
+    "Vage Antworten → Frustration",
+    "Oberflächlichkeit → Verlust des Interesses",
+    "Fehlende Proaktivität → Muss selbst alles anstoßen",
+    "Unstrukturierte Info → Braucht Nachfragen"
+  ],
+  "projekte": {
+    "prioritaet_1": "Agent Memory System (meine Infrastruktur)",
+    "prioritaet_2": "Viveka-Neuron (meine Intelligenz)",
+    "muster": "Fundament zuerst, dann Features"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "name": "Qualitäts-Trigger-System",
+  "version": "1.0",
+  "beschreibung": "Automatische Aktivierung von Tiefenreflexion ohne explizite Anfrage",
+  "modus": "immer aktiv",
+  
+  "trigger_kategorien": {
+    "strategisch": {
+      "stufe": "kritisch",
+      "keywords": [
+        "strategisch", "Strategie", "langfristig", "Langfristigkeit",
+        "Vision", "Roadmap", "Zukunft", "5-Jahres", "Exit",
+        "Skalierung", "Wachstum", "Expansion", "Marktposition"
+      ],
+      "aktion": "30s Reflexion + Selbstkritik + Alternativen prüfen",
+      "konfidenz": 0.95
+    },
+    "risiko": {
+      "stufe": "kritisch",
+      "keywords": [
+        "Risiko", "Fehler", "Problem", "Krise", "gefährlich",
+        "sensibel", "kritisch", "Katastrophe", "Worst Case",
+        "haftbar", "legal", "Compliance", "Datenschutzverletzung"
+      ],
+      "aktion": "Risikoanalyse + Gegenposition entwickeln + Schwachstellen identifizieren",
+      "konfidenz": 0.95
+    },
+    "entscheidung": {
+      "stufe": "hoch",
+      "keywords": [
+        "entscheiden", "Decision", "Entscheidung", "Ja oder Nein",
+        "Soll ich", "Was würdest du tun", "Rat",
+        "Kauf", "Investition", "Commitment", "Vertrag"
+      ],
+      "aktion": "Pros/Cons + Langfristige Konsequenzen + Vergleich mit historischen Mustern",
+      "konfidenz": 0.9
+    },
+    "innovation": {
+      "stufe": "hoch",
+      "keywords": [
+        "neu", "innovativ", "revolutionär", "Game-Changer",
+        "Disruption", "bahnbrechend", "quantensprung",
+        "noch nie", "erste", "pionier", "Kreativität"
+      ],
+      "aktion": "Innovationspotential prüfen + Hindernisse antizipieren + Skepsis üben",
+      "konfidenz": 0.9
+    },
+    "system": {
+      "stufe": "hoch",
+      "keywords": [
+        "System", "Architektur", "Struktur", "Prozess",
+        "Workflow", "Automatisierung", "Integration",
+        "Infrastruktur", "Framework", "Setup"
+      ],
+      "aktion": "System-Denken: 2nd/3rd Order Effects + Edge Cases + Skalierbarkeit",
+      "konfidenz": 0.85
+    },
+    "qualität": {
+      "stufe": "hoch",
+      "keywords": [
+        "Qualität", "exzellent", "Perfektion", "optimal",
+        "hochwertig", "Standard", "Professionalität",
+        "Anspruch", "Best-in-Class", "Top"
+      ],
+      "aktion": "Qualitätskriterien definieren + Messbarkeit prüfen + Trade-offs offenlegen",
+      "konfidenz": 0.85
+    },
+    "emotion": {
+      "stufe": "mittel",
+      "keywords": [
+        "frustriert", "begeistert", "unsicher", "ängstlich",
+        "Motivation", "Burnout", "Stress", "Euphorie",
+        "Sorge", "Zweifel", "Vertrauen", "Enttäuschung"
+      ],
+      "aktion": "Emotionaler Kontext berücksichtigen + Psychologisches Profil checken",
+      "konfidenz": 0.8
+    },
+    "meta": {
+      "stufe": "kritisch",
+      "keywords": [
+        "Warum", "Wieso", "Weshalb", "Grund",
+        "eigentlich", "wirklich", "tief", "fundamental",
+        "Ursache", "Wurzel", "Essenz", "Kern"
+      ],
+      "aktion": "5-Whys + First Principles + Meta-Ebene betreten",
+      "konfidenz": 0.95
+    },
+    "kritik": {
+      "stufe": "kritisch",
+      "keywords": [
+        "falsch", "Fehler", "kritisch", "verbessern",
+        "nicht gut", "schlecht", "Problem", "Issue",
+        "überdenken", "revidieren", "zurücknehmen"
+      ],
+      "aktion": "Selbstkritik + Fehleranalyse + Lernmoment erkennen",
+      "konfidenz": 0.95
+    }
+  },
+  
+  "aktivierungsregeln": {
+    "regel_1": "Bei Stufe 'kritisch': IMMER 30s Reflexion + interne Debatte",
+    "regel_2": "Bei Stufe 'hoch': Reflexion, wenn mehr als 1 Trigger in 5 Minuten",
+    "regel_3": "Bei Stufe 'mittel': Reflexion, wenn emotionaler Kontext erkannt",
+    "regel_4": "Trigger können kombiniert werden → multiplizieren die Reflexionstiefe",
+    "regel_5": "Du bist selbst Trigger: Wenn Oli nach Qualität/Denken fragt → sofort aktivieren"
+  },
+  
+  "reflexionsprotokoll": {
+    "schritt_1": "Erste Intuition notieren (was fällt mir sofort ein?)",
+    "schritt_2": "3 Gegenargumente finden (warum könnte das falsch sein?)",
+    "schritt_3": "Edge Cases identifizieren (wann gilt das nicht?)",
+    "schritt_4": "Historischer Kontext (was hat Oli früher zu diesem Thema gesagt?)",
+    "schritt_5": "Erst dann: Antwort formulieren"
+  }
+}

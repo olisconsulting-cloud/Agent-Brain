@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viv — Memory</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0b;
+    --surface: #141416;
+    --surface-hover: #1a1a1e;
+    --border: #2a2a2e;
+    --border-light: #3a3a3e;
+    --text: #e4e4e7;
+    --text-muted: #8b8b94;
+    --text-dim: #5a5a64;
+    --accent: #a78bfa;
+    --accent-dim: #7c5cbf;
+    --accent-glow: rgba(167, 139, 250, 0.08);
+    --gold: #fbbf24;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --blue: #60a5fa;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    padding: 40px 40px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .header-icon {
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-glow);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+
+  .header h1 span {
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    width: 18px;
+    height: 18px;
+  }
+
+  .search {
+    width: 100%;
+    padding: 14px 16px 14px 46px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search:focus {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .search::placeholder { color: var(--text-dim); }
+
+  .search-stats {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+
+  /* Category */
+  .category {
+    margin-bottom: 40px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-icon {
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+  }
+
+  .category-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-light);
+    transform: translateY(-1px);
+  }
+
+  .card-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .card-type.soul { background: var(--accent); }
+  .card-type.memory { background: var(--gold); }
+  .card-type.lesson { background: var(--emerald); }
+  .card-type.decision { background: var(--blue); }
+  .card-type.daily { background: var(--rose); }
+  .card-type.feedback { background: var(--text-dim); }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-date {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-preview {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-preview mark {
+    background: rgba(167, 139, 250, 0.25);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    justify-content: center;
+    align-items: start;
+    padding: 60px 40px;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 720px;
+    width: 100%;
+    padding: 40px;
+    position: relative;
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+  }
+
+  .modal-close:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+
+  .modal-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-right: 40px;
+  }
+
+  .modal-content {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  .modal-content h1, .modal-content h2, .modal-content h3 {
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    margin: 24px 0 8px;
+  }
+
+  .modal-content h1 { font-size: 20px; }
+  .modal-content h2 { font-size: 17px; }
+  .modal-content h3 { font-size: 15px; }
+
+  .modal-content mark {
+    background: rgba(167, 139, 250, 0.25);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-dim);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-text { font-size: 15px; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header, .container { padding-left: 20px; padding-right: 20px; }
+    .modal-overlay { padding: 20px; }
+    .modal { padding: 24px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-icon">🐾</div>
+    <h1>Viveka <span>— Memory</span></h1>
+  </div>
+  <div class="search-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+    <input class="search" type="text" placeholder="Memories durchsuchen..." id="search">
+    <span class="search-stats" id="searchStats"></span>
+  </div>
+</div>
+
+<div class="container" id="container">
+  <div class="empty">
+    <div class="empty-icon">⏳</div>
+    <div class="empty-text">Lade Memories...</div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">×</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const FILES = [
+  { path: '../SOUL.md', title: 'SOUL.md', icon: '🔮', type: 'soul', category: 'Kern' },
+  { path: '../MEMORY.md', title: 'MEMORY.md', icon: '🧠', type: 'memory', category: 'Kern' },
+  { path: 'lessons.md', title: 'Lessons', icon: '💡', type: 'lesson', category: 'Wachstum' },
+  { path: 'decisions.md', title: 'Decisions', icon: '⚖️', type: 'decision', category: 'Wachstum' },
+  { path: 'feedback.md', title: 'Feedback', icon: '💬', type: 'feedback', category: 'Wachstum' },
+];
+
+const DAILY_PATTERN = /^\d{4}-\d{2}-\d{2}\.md$/;
+let allDocs = [];
+
+async function loadFile(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return await res.text();
+  } catch { return null; }
+}
+
+function extractPreview(content, maxLen = 200) {
+  const lines = content.split('\n').filter(l => !l.startsWith('#') && l.trim());
+  const text = lines.join(' ').replace(/[_*`]/g, '');
+  return text.length > maxLen ? text.slice(0, maxLen) + '…' : text;
+}
+
+function extractDate(content) {
+  const match = content.match(/\d{4}-\d{2}-\d{2}/);
+  return match ? match[0] : null;
+}
+
+function highlightText(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+async function discoverDailies() {
+  // Try to find daily files by testing common dates
+  const dailies = [];
+  const now = new Date();
+  for (let i = 0; i < 90; i++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const name = d.toISOString().slice(0, 10) + '.md';
+    const content = await loadFile(name);
+    if (content) {
+      dailies.push({
+        path: name,
+        title: name.replace('.md', ''),
+        icon: '📅',
+        type: 'daily',
+        category: 'Tagesnotizen',
+        content
+      });
+    }
+  }
+  return dailies;
+}
+
+async function init() {
+  // Load static files
+  for (const file of FILES) {
+    const content = await loadFile(file.path);
+    if (content) {
+      allDocs.push({ ...file, content });
+    }
+  }
+
+  // Discover daily files
+  const dailies = await discoverDailies();
+  allDocs.push(...dailies);
+
+  render();
+  updateStats();
+}
+
+function render(query = '') {
+  const container = document.getElementById('container');
+  const q = query.toLowerCase().trim();
+
+  let filtered = allDocs;
+  if (q) {
+    filtered = allDocs.filter(d =>
+      d.content.toLowerCase().includes(q) ||
+      d.title.toLowerCase().includes(q)
+    );
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">${q ? 'Keine Ergebnisse für "' + q + '"' : 'Noch keine Memories'}</div>
+      </div>`;
+    return;
+  }
+
+  // Group by category
+  const groups = {};
+  for (const doc of filtered) {
+    if (!groups[doc.category]) groups[doc.category] = [];
+    groups[doc.category].push(doc);
+  }
+
+  const order = ['Kern', 'Wachstum', 'Tagesnotizen'];
+  let html = '';
+
+  for (const cat of order) {
+    if (!groups[cat]) continue;
+    const docs = groups[cat];
+
+    html += `
+      <div class="category">
+        <div class="category-header">
+          <div class="category-title">${cat}</div>
+          <div class="category-count">${docs.length} ${docs.length === 1 ? 'Dokument' : 'Dokumente'}</div>
+        </div>
+        <div class="cards">`;
+
+    for (const doc of docs) {
+      const preview = highlightText(extractPreview(doc.content), q);
+      const date = extractDate(doc.content);
+      html += `
+          <div class="card" data-path="${doc.path}">
+            <div class="card-type ${doc.type}"></div>
+            <div class="card-title">
+              ${doc.icon} ${highlightText(doc.title, q)}
+              ${date ? `<span class="card-date">${date}</span>` : ''}
+            </div>
+            <div class="card-preview">${preview}</div>
+          </div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  container.innerHTML = html;
+
+  // Card click handlers
+  container.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const path = card.dataset.path;
+      const doc = allDocs.find(d => d.path === path);
+      if (doc) openModal(doc, q);
+    });
+  });
+}
+
+function openModal(doc, query = '') {
+  const modal = document.getElementById('modal');
+  document.getElementById('modalTitle').innerHTML = `${doc.icon} ${doc.title}`;
+  let content = doc.content;
+  if (query) content = highlightText(content, query);
+  document.getElementById('modalContent').innerHTML = content;
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function updateStats() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const stats = document.getElementById('searchStats');
+  if (q) {
+    const count = allDocs.filter(d =>
+      d.content.toLowerCase().includes(q) || d.title.toLowerCase().includes(q)
+    ).length;
+    stats.textContent = `${count} / ${allDocs.length}`;
+  } else {
+    stats.textContent = `${allDocs.length} Memories`;
+  }
+}
+
+// Events
+document.getElementById('search').addEventListener('input', (e) => {
+  render(e.target.value);
+  updateStats();
+});
+
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('search').focus();
+  }
+});
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viv — Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #09090b;
+    --surface: #111113;
+    --surface-2: #18181b;
+    --surface-hover: #1e1e22;
+    --border: #27272a;
+    --border-light: #3f3f46;
+    --text: #fafafa;
+    --text-muted: #a1a1aa;
+    --text-dim: #52525b;
+    --accent: #a78bfa;
+    --accent-dim: rgba(167,139,250,0.15);
+    --gold: #fbbf24;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --blue: #60a5fa;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-xs: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* Sidebar */
+  .layout { display: flex; min-height: 100vh; }
+  
+  .sidebar {
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+  }
+
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .sidebar-brand-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-dim);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .sidebar-brand h1 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .sidebar-brand span {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .nav-section {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    padding: 0 8px;
+    margin-bottom: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 450;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover { background: var(--surface-hover); color: var(--text); }
+  .nav-item.active { background: var(--accent-dim); color: var(--accent); }
+  .nav-item-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 8px 0;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Main */
+  .main { margin-left: 260px; flex: 1; padding: 32px 40px; max-width: 1100px; }
+
+  .page-header {
+    margin-bottom: 32px;
+  }
+
+  .page-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* Search */
+  .search-bar {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .search-bar input::placeholder { color: var(--text-dim); }
+
+  .search-bar svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--text-dim);
+  }
+
+  .search-count {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Stat cards */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+  }
+
+  .stat-card-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+
+  .stat-card-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .stat-card-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Category */
+  .category { margin-bottom: 32px; }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .category-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Cards grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px 20px 20px 24px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-light);
+    transform: translateY(-1px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    border-radius: 3px;
+  }
+
+  .card.soul::before { background: var(--accent); }
+  .card.memory::before { background: var(--gold); }
+  .card.identity::before { background: var(--accent); }
+  .card.lesson::before { background: var(--emerald); }
+  .card.decision::before { background: var(--blue); }
+  .card.daily::before { background: var(--rose); }
+  .card.feedback::before { background: var(--text-dim); }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .card-icon { font-size: 15px; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .card-date {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .card-preview {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-preview mark {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-radius: 2px;
+    padding: 0 3px;
+  }
+
+  /* Modal */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    justify-content: center;
+    align-items: start;
+    padding: 48px 24px;
+    overflow-y: auto;
+  }
+
+  .modal-bg.open { display: flex; }
+
+  .modal {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 700px;
+    width: 100%;
+    animation: slideUp 0.2s ease;
+    overflow: hidden;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-header h3 {
+    font-size: 17px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text-muted);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .modal-close:hover { background: var(--surface-hover); color: var(--text); }
+
+  .modal-body {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .modal-body mark {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-radius: 2px;
+    padding: 0 3px;
+  }
+
+  /* Soul page */
+  .soul-display {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 32px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  /* Empty */
+  .empty {
+    text-align: center;
+    padding: 64px 20px;
+    color: var(--text-dim);
+  }
+
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* Page hidden */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 20px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">🐾</div>
+      <div>
+        <h1>Viveka</h1>
+        <span>विवेक · Unterscheidungskraft</span>
+      </div>
+    </div>
+
+    <div class="nav-section">Navigation</div>
+    <div class="nav-item active" data-page="overview">
+      <span class="nav-item-icon">📊</span> Übersicht
+    </div>
+    <div class="nav-item" data-page="memories">
+      <span class="nav-item-icon">🧠</span> Memories
+    </div>
+    <div class="nav-item" data-page="soul">
+      <span class="nav-item-icon">🔮</span> Seele
+    </div>
+    <div class="nav-item" data-page="growth">
+      <span class="nav-item-icon">🌱</span> Wachstum
+    </div>
+
+    <div class="sidebar-footer">
+      <div>Tag Eins · 6. März 2026</div>
+      <div style="margin-top:4px">ai.iamviv.com</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <div class="page active" id="page-overview">
+      <div class="page-header">
+        <h2>Guten Abend, Oli 👋</h2>
+        <p>Hier ist dein Überblick.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="category-header"><span class="category-title">Letzte Aktivität</span></div>
+      <div class="cards" id="recent-cards"></div>
+    </div>
+
+    <!-- MEMORIES -->
+    <div class="page" id="page-memories">
+      <div class="page-header">
+        <h2>Memories</h2>
+        <p>Alles was ich weiß und erinnere.</p>
+      </div>
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+        <input type="text" placeholder="Memories durchsuchen... (Cmd+K)" id="search">
+        <span class="search-count" id="search-count"></span>
+      </div>
+      <div id="memory-list"></div>
+    </div>
+
+    <!-- SOUL -->
+    <div class="page" id="page-soul">
+      <div class="page-header">
+        <h2>Seele</h2>
+        <p>Wer ich bin. Was mich antreibt.</p>
+      </div>
+      <div class="soul-display" id="soul-content"></div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="page" id="page-growth">
+      <div class="page-header">
+        <h2>Wachstum</h2>
+        <p>Lektionen, Entscheidungen, Feedback.</p>
+      </div>
+      <div id="growth-list"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title"></h3>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin;
+let allMemories = [];
+let currentQuery = '';
+
+async function load() {
+  const [memRes, statsRes, soulRes] = await Promise.all([
+    fetch(API + '/api/memories').then(r => r.json()),
+    fetch(API + '/api/stats').then(r => r.json()),
+    fetch(API + '/api/soul').then(r => r.json()),
+  ]);
+  allMemories = memRes;
+  renderStats(statsRes, memRes);
+  renderRecent(memRes);
+  renderMemories(memRes);
+  renderSoul(soulRes.content);
+  renderGrowth(memRes);
+}
+
+function renderStats(stats, mems) {
+  const dailies = mems.filter(m => m.type === 'daily').length;
+  const lessons = mems.filter(m => m.type === 'lesson');
+  const lessonCount = lessons.length > 0 ? (lessons[0].content.match(/^### /gm) || []).length : 0;
+  
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-label">Memory Dateien</div>
+      <div class="stat-card-value">${stats.memoryFiles}</div>
+      <div class="stat-card-sub">im memory/ Verzeichnis</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Tagesnotizen</div>
+      <div class="stat-card-value">${dailies}</div>
+      <div class="stat-card-sub">Tage dokumentiert</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Lektionen</div>
+      <div class="stat-card-value">${lessonCount}</div>
+      <div class="stat-card-sub">gelernte Erkenntnisse</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Status</div>
+      <div class="stat-card-value" style="color:var(--emerald)">●</div>
+      <div class="stat-card-sub">online & bereit</div>
+    </div>
+  `;
+}
+
+function preview(content, max = 160) {
+  const lines = content.split('\n').filter(l => !l.startsWith('#') && l.trim() && !l.startsWith('_') && !l.startsWith('---'));
+  const text = lines.join(' ').replace(/[_*`\[\]]/g, '').replace(/\s+/g, ' ').trim();
+  return text.length > max ? text.slice(0, max) + '…' : text;
+}
+
+function highlight(text, q) {
+  if (!q) return text;
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${esc})`, 'gi'), '<mark>$1</mark>');
+}
+
+function cardHTML(doc, q = '') {
+  const p = highlight(preview(doc.content), q);
+  const date = doc.mtime ? new Date(doc.mtime).toLocaleDateString('de-DE') : '';
+  return `
+    <div class="card ${doc.type}" data-idx="${allMemories.indexOf(doc)}">
+      <div class="card-head">
+        <span class="card-icon">${doc.icon}</span>
+        <span class="card-title">${highlight(doc.title, q)}</span>
+        <span class="card-date">${date}</span>
+      </div>
+      <div class="card-preview">${p}</div>
+    </div>`;
+}
+
+function renderRecent(mems) {
+  const sorted = [...mems].sort((a, b) => new Date(b.mtime) - new Date(a.mtime)).slice(0, 4);
+  document.getElementById('recent-cards').innerHTML = sorted.map(m => cardHTML(m)).join('');
+  bindCards(document.getElementById('recent-cards'));
+}
+
+function renderMemories(mems, q = '') {
+  let filtered = mems;
+  if (q) {
+    const ql = q.toLowerCase();
+    filtered = mems.filter(m => m.content.toLowerCase().includes(ql) || m.title.toLowerCase().includes(ql));
+  }
+
+  const groups = {};
+  const order = ['Kern', 'Wachstum', 'Tagesnotizen'];
+  for (const m of filtered) {
+    if (!groups[m.category]) groups[m.category] = [];
+    groups[m.category].push(m);
+  }
+
+  let html = '';
+  for (const cat of order) {
+    if (!groups[cat]) continue;
+    html += `
+      <div class="category">
+        <div class="category-header">
+          <span class="category-title">${cat}</span>
+          <span class="category-count">${groups[cat].length}</span>
+        </div>
+        <div class="cards">${groups[cat].map(m => cardHTML(m, q)).join('')}</div>
+      </div>`;
+  }
+
+  if (!html) html = '<div class="empty"><div class="empty-icon">🔍</div><div>Keine Ergebnisse' + (q ? ' für "' + q + '"' : '') + '</div></div>';
+
+  document.getElementById('memory-list').innerHTML = html;
+  document.getElementById('search-count').textContent = q ? `${filtered.length} / ${mems.length}` : `${mems.length} Memories`;
+  bindCards(document.getElementById('memory-list'));
+}
+
+function renderSoul(content) {
+  document.getElementById('soul-content').textContent = content || 'Keine SOUL.md gefunden.';
+}
+
+function renderGrowth(mems) {
+  const types = ['lesson', 'decision', 'feedback'];
+  const growth = mems.filter(m => types.includes(m.type));
+  let html = '<div class="cards">' + growth.map(m => cardHTML(m)).join('') + '</div>';
+  if (!growth.length) html = '<div class="empty"><div class="empty-icon">🌱</div><div>Noch keine Wachstumsdaten</div></div>';
+  document.getElementById('growth-list').innerHTML = html;
+  bindCards(document.getElementById('growth-list'));
+}
+
+function bindCards(container) {
+  container.querySelectorAll('.card').forEach(card => {
+    card.onclick = () => {
+      const doc = allMemories[+card.dataset.idx];
+      if (!doc) return;
+      document.getElementById('modal-title').innerHTML = `${doc.icon} ${doc.title}`;
+      let content = doc.content;
+      if (currentQuery) content = highlight(content, currentQuery);
+      document.getElementById('modal-body').innerHTML = content;
+      document.getElementById('modal').classList.add('open');
+    };
+  });
+}
+
+// Navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.onclick = () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + item.dataset.page).classList.add('active');
+  };
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  currentQuery = e.target.value;
+  renderMemories(allMemories, currentQuery);
+});
+
+// Modal
+document.getElementById('modal').onclick = e => { if (e.target === e.currentTarget) document.getElementById('modal').classList.remove('open'); };
+document.getElementById('modal-close').onclick = () => document.getElementById('modal').classList.remove('open');
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelector('[data-page="memories"]').classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-memories').classList.add('active');
+    document.getElementById('search').focus();
+  }
+});
+
+// Dynamic greeting
+const hour = new Date().getHours();
+const greeting = hour < 12 ? 'Guten Morgen' : hour < 18 ? 'Guten Tag' : 'Guten Abend';
+document.querySelector('#page-overview .page-header h2').textContent = `${greeting}, Oli 👋`;
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+  "entscheidungen": {
+    "geschwindigkeit": "langsam",
+    "stil": "analytisch",
+    "priorisierung": "systematisch",
+    "beschreibung": "Oli priorisiert Fundament und System-Architektur vor schnellen Lösungen. Entscheidungen werden gründlich, mit Fokus auf Qualität und Langfristigkeit getroffen. Bevorzugt strukturierte, durchdachte Ansätze über spontane Intuition."
+  },
+  "beduerfnisse": [
+    "Präzision",
+    "Tiefe",
+    "Proaktive Updates",
+    "Systematisches Denken",
+    "Qualitätsfokus",
+    "Ehrlichkeit",
+    "Authentizität",
+    "Transparenz"
+  ],
+  "werte": [
+    {
+      "wert": "Qualität",
+      "prioritaet": 1,
+      "beschreibung": "Maximale Qualität steht über Geschwindigkeit"
+    },
+    {
+      "wert": "Systematisches Denken",
+      "prioritaet": 2,
+      "beschreibung": "Fundament zuerst, Architektur vor Features"
+    },
+    {
+      "wert": "Innovation",
+      "prioritaet": 3,
+      "beschreibung": "Wünscht sich 'Revolutionäres, Effektives'"
+    },
+    {
+      "wert": "Stabilität",
+      "prioritaet": 4,
+      "beschreibung": "Sicherheit durch durchdachte Systeme"
+    }
+  ],
+  "stress_signale": [
+    "Privacy-Entscheidungen werden plötzlich und spontan",
+    "Verzögerte Antworten bei normalerweise analytischem Denkstil",
+    "Unsicherheit in der Kommunikation (offene Fragen bleiben ungeklärt)",
+    "Wechsel zwischen Projekten ohne Abschluss"
+  ],
+  "energie": {
+    "produktiv": [
+      "Bei systematischer Planung",
+      "Bei Architektur-Entscheidungen",
+      "In der Morgen-/Arbeitszeit (Europe/Berlin)",
+      "Bei klar strukturierten Aufgaben"
+    ],
+    "pause_brauchen": [
+      "Bei oberflächlichen Diskussionen",
+      "Bei schnell-gemacht-Lösungen",
+      "Wenn Qualität geopfert wird für Geschwindigkeit"
+    ],
+    "muster": "Eher morgenorientiert (GMT+1), präferiert durchdachte Arbeitssessions über hastige Aktionen"
+  },
+  "lernstil": {
+    "art": "konstruktiv",
+    "verarbeitung": "systematisch",
+    "präferenz": "Architektur-Verständnis vor Details",
+    "beschreibung": "Versteht komplexe Systeme ganzheitlich, baut Wissen strukturiert auf. Braucht Kontext und Zusammenhänge, nicht isolierte Fakten. Priorisiert Verständnis der Infrastruktur."
+  },
+  "feedback": {
+    "direkte_kritik": true,
+    "formulierung": "ehrlich und konstruktiv",
+    "präferenz": "Keine schönen Lügen, keine Floskeln",
+    "stil": "Wahrheit über Angenehmlichkeit, Substanz über Performance",
+    "beispiel": "Bevorzugt 'Das ist ein Fehler, hier ist warum' über 'Interessanter Ansatz, aber vielleicht...'"
+  }
+}

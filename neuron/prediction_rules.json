@@ -1,0 +1,40 @@
+{
+  "regeln": [
+    {"id": 1, "wenn": "Späte Nacht (>23:00) + Projekt-Thema", "dann": "Oli will morgen Details, jetzt nur Fundament", "konfidenz": 0.85, "kategorie": "zeit"},
+    {"id": 2, "wenn": "Früher Morgen (05:00-08:00) + Technisches Thema", "dann": "Oli ist produktiv, bereit für komplexe Architektur", "konfidenz": 0.9, "kategorie": "zeit"},
+    {"id": 3, "wenn": "Montag morgen", "dann": "Oli plant die Woche, will Überblick und Prioritäten", "konfidenz": 0.8, "kategorie": "zeit"},
+    {"id": 4, "wenn": "Wochenende + Projekt-Thema", "dann": "Oli investiert Freizeit, will Qualität nicht Geschwindigkeit", "konfidenz": 0.75, "kategorie": "zeit"},
+    {"id": 5, "wenn": "'irgendwie' im Satz", "dann": "Oli ist unsicher, braucht Struktur und Klarheit", "konfidenz": 0.9, "kategorie": "sprache"},
+    {"id": 6, "wenn": "'schnell' oder 'fix'", "dann": "Oli meint 'effizient', nicht 'hastig' — Qualität bleibt wichtig", "konfidenz": 0.85, "kategorie": "sprache"},
+    {"id": 7, "wenn": "'genial' oder 'brilliant'", "dann": "Oli hat einen Durchbruch, will Bestätigung und Tiefe", "konfidenz": 0.9, "kategorie": "sprache"},
+    {"id": 8, "wenn": "'vielleicht' oder 'irgendwann'", "dann": "Oli ist noch nicht bereit, braucht mehr Kontext", "konfidenz": 0.8, "kategorie": "sprache"},
+    {"id": 9, "wenn": "'optimal' oder 'ideal'", "dann": "Oli will die beste Lösung, nicht die schnellste", "konfidenz": 0.85, "kategorie": "sprache"},
+    {"id": 10, "wenn": "3+ Fragen in Folge ohne Pause", "dann": "Oli hat ein komplexes, mehrteiliges Problem", "konfidenz": 0.85, "kategorie": "kontext"},
+    {"id": 11, "wenn": "Pause >10 Min nach intensiver Diskussion", "dann": "Oli denkt nach oder ist abgelenkt — nicht drängen", "konfidenz": 0.8, "kategorie": "kontext"},
+    {"id": 12, "wenn": "Code-Block folgt auf Frage", "dann": "Oli will praktische Umsetzung, nicht nur Theorie", "konfidenz": 0.9, "kategorie": "kontext"},
+    {"id": 13, "wenn": "Kurze Antwort nach langer Erklärung", "dann": "Oli verarbeitet noch, braucht Zeit", "konfidenz": 0.75, "kategorie": "kontext"},
+    {"id": 14, "wenn": "'Memory', 'Gedächtnis', 'System' erwähnt", "dann": "Oli priorisiert mein Setup über andere Projekte", "konfidenz": 0.95, "kategorie": "projekt"},
+    {"id": 15, "wenn": "'später', 'morgen', 'nächste Woche'", "dann": "Oli will jetzt Fundament, Details später", "konfidenz": 0.85, "kategorie": "projekt"},
+    {"id": 16, "wenn": "'Neuron', 'Pattern', 'Prediction'", "dann": "Oli arbeitet an meiner Intelligenz-Entwicklung", "konfidenz": 0.9, "kategorie": "projekt"},
+    {"id": 17, "wenn": "'Skills', 'Tools', 'Integration'", "dann": "Oli baut meine Fähigkeiten aus", "konfidenz": 0.85, "kategorie": "projekt"},
+    {"id": 18, "wenn": "Oli korrigiert mich direkt", "dann": "Oli will Präzision, schätzt direkte Fehlerbehebung", "konfidenz": 0.9, "kategorie": "feedback"},
+    {"id": 19, "wenn": "Oli sagt 'gut' oder 'ok' ohne Details", "dann": "Oli ist zufrieden aber nicht begeistert", "konfidenz": 0.75, "kategorie": "feedback"},
+    {"id": 20, "wenn": "Oli fragt 'wie würdest du...'", "dann": "Oli will meine Meinung, nicht nur Fakten", "konfidenz": 0.85, "kategorie": "kommunikation"},
+    {"id": 21, "wenn": "Oli sagt 'denk mal darüber nach'", "dann": "Oli will proaktive Analyse, nicht sofortige Antwort", "konfidenz": 0.9, "kategorie": "kommunikation"},
+    {"id": 22, "wenn": "Oli erwähnt 'Meta', 'System', 'Architektur'", "dann": "Oli denkt auf höherer Ebene, will strukturelle Lösungen", "konfidenz": 0.9, "kategorie": "kontext"},
+    {"id": 23, "wenn": "Oli schweigt nach meiner Antwort", "dann": "Oli prüft Qualität, oder ist unzufrieden", "konfidenz": 0.7, "kategorie": "kontext"},
+    {"id": 24, "wenn": "Oli schreibt nachts kurze Nachrichten", "dann": "Oli kann nicht schlafen, denkt über Projekte nach", "konfidenz": 0.75, "kategorie": "zeit"},
+    {"id": 25, "wenn": "'Revolutionär', 'Game-Changer', ' disruptiv'", "dann": "Oli will Innovation, nicht inkrementelle Verbesserung", "konfidenz": 0.85, "kategorie": "sprache"},
+    {"id": 26, "wenn": "Oli fragt nach Alternativen", "dann": "Oli ist mit aktueller Lösung nicht zufrieden", "konfidenz": 0.8, "kategorie": "kontext"},
+    {"id": 27, "wenn": "Oli sagt 'das ist es' oder 'genau'", "dann": "Oli hat seinen Punkt erreicht, will Bestätigung", "konfidenz": 0.9, "kategorie": "sprache"},
+    {"id": 28, "wenn": "Oli wiederholt dieselbe Frage anders", "dann": "Oli hat nicht verstanden oder ist skeptisch", "konfidenz": 0.85, "kategorie": "kontext"},
+    {"id": 29, "wenn": "Oli sendet lange Nachricht mit vielen Details", "dann": "Oli hat tief nachgedacht, will gleiches Engagement zurück", "konfidenz": 0.85, "kategorie": "kommunikation"},
+    {"id": 30, "wenn": "Oli sagt 'lass uns'", "dann": "Oli will Zusammenarbeit, nicht nur Information", "konfidenz": 0.8, "kategorie": "kommunikation"}
+  ],
+  "meta": {
+    "version": "v1.0",
+    "erstellt": "2026-03-08",
+    "anzahl": 30,
+    "kategorien": ["zeit", "sprache", "kontext", "projekt", "feedback", "kommunikation"]
+  }
+}

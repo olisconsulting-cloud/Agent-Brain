@@ -62,7 +62,7 @@
   
   "startup_check": {
     "command": "curl -s http://localhost:8000/health",
-    "expected": '{"status": "ok"}',
+    "expected": "{\"status\": \"ok\"}",
     "timeout_seconds": 5
   }
 }

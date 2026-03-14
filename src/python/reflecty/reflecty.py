@@ -426,6 +426,148 @@ class PatternAnalyzer:
         return hashlib.md5(content.encode()).hexdigest()[:8]
 
 # ═══════════════════════════════════════════════════════════════════
+# CONTEXT MANAGER (P0/P1/P2 Hierarchical Loading)
+# ═══════════════════════════════════════════════════════════════════
+
+class ContextManager:
+    """
+    Verwaltet hierarchischen Kontext für Sessions
+    
+    P0: Immer laden (Core)
+    P1: On-Demand (bei Trigger)
+    P2: Search (semantisch)
+    """
+    
+    def __init__(self, workspace: str = None):
+        self.workspace = Path(workspace or WORKSPACE)
+        self.max_p0_lines = 150
+        
+        # P0: Core files (always loaded)
+        self.p0_files = [
+            self.workspace / 'SOUL.md',
+            self.workspace / 'USER.md',
+            self.workspace / 'AGENTS.md',
+        ]
+        
+        # P1: On-demand files (by trigger)
+        self.p1_files = {
+            'strategisch': self.workspace / 'neuron' / 'core_mission.json',
+            'fehler': self.workspace / 'neuron' / 'anti_patterns_v3.jsonl',
+            'subagent': self.workspace / 'neuron' / 'subagent_factory.py',
+            'heartbeat': self.workspace / 'neuron' / 'HEARTBEAT.md',
+        }
+    
+    def get_core_context(self) -> str:
+        """Lädt P0-Kontext (immer)"""
+        parts = []
+        total_lines = 0
+        
+        for file in self.p0_files:
+            if file.exists():
+                try:
+                    with open(file) as f:
+                        content = f.read()
+                        lines = content.count('\n')
+                        
+                        # Compress if over limit
+                        if total_lines + lines > self.max_p0_lines:
+                            allowed = self.max_p0_lines - total_lines
+                            content = self._compress_content(content, allowed)
+                            lines = allowed
+                        
+                        parts.append(f"\n\n=== {file.name} ===\n\n{content}")
+                        total_lines += lines
+                        
+                except Exception as e:
+                    parts.append(f"\n\n=== {file.name} ===\n\n[Error: {e}]")
+        
+        return '\n'.join(parts)
+    
+    def load_on_demand(self, trigger: str) -> Optional[str]:
+        """Lädt P1-Kontext bei Trigger"""
+        if trigger in self.p1_files:
+            file = self.p1_files[trigger]
+            if file.exists():
+                try:
+                    with open(file) as f:
+                        return f.read()
+                except Exception:
+                    pass
+        return None
+    
+    def search_memory(self, query: str, max_results: int = 3) -> List[Dict]:
+        """Semantische Suche in MEMORY.md"""
+        results = []
+        memory_file = self.workspace / 'MEMORY.md'
+        
+        if memory_file.exists():
+            try:
+                with open(memory_file) as f:
+                    content = f.read()
+                    if query.lower() in content.lower():
+                        lines = content.split('\n')
+                        for i, line in enumerate(lines):
+                            if query.lower() in line.lower():
+                                start = max(0, i - 2)
+                                end = min(len(lines), i + 3)
+                                context = '\n'.join(lines[start:end])
+                                results.append({
+                                    'source': 'MEMORY.md',
+                                    'context': context,
+                                    'line': i
+                                })
+                                if len(results) >= max_results:
+                                    break
+            except Exception:
+                pass
+        
+        return results
+    
+    def _compress_content(self, content: str, max_lines: int) -> str:
+        """Komprimiert Inhalt auf max_lines"""
+        lines = content.split('\n')
+        
+        if len(lines) <= max_lines:
+            return content
+        
+        # Strategy: Header + Essence + Footer
+        header_lines = lines[:20]
+        footer_lines = lines[-10:]
+        
+        # Middle: Only important lines
+        middle = [l for l in lines[20:-10] if l.strip() and not l.strip().startswith('#')]
+        
+        middle_budget = max_lines - len(header_lines) - len(footer_lines) - 5
+        
+        if len(middle) > middle_budget:
+            middle = middle[:middle_budget]
+            middle.append("\n... [gekürzt] ...\n")
+        
+        return '\n'.join(header_lines + middle + footer_lines)
+    
+    def get_context_report(self) -> str:
+        """Zeigt aktuellen Kontext-Status"""
+        lines = [
+            "╔════════════════════════════════════════════════════════════╗",
+            "║  REFLECTY CONTEXT MANAGER                                  ║",
+            "╚════════════════════════════════════════════════════════════╝",
+            "",
+            f"P0 (Always): {len(self.p0_files)} files",
+            f"P1 (On-Demand): {len(self.p1_files)} triggers",
+            f"Max P0 Lines: {self.max_p0_lines}",
+            "",
+            "P1 Triggers:"
+        ]
+        
+        for trigger, file in self.p1_files.items():
+            exists = "✅" if file.exists() else "❌"
+            lines.append(f"  {exists} {trigger} → {file.name}")
+        
+        lines.append("")
+        return '\n'.join(lines)
+
+
+# ═══════════════════════════════════════════════════════════════════
 # MAIN
 # ═══════════════════════════════════════════════════════════════════
 
@@ -503,6 +645,16 @@ def main():
         memories = smriti.get_memories(limit=100)
         print(f"   {len(memories)} Memories geladen")
         print("   (Multi-Session Aggregation würde hier laufen)")
+    
+    elif args.mode == "context":
+        print("\n🧠 Context Management...")
+        cm = ContextManager()
+        print(cm.get_context_report())
+        print("\n" + "=" * 60)
+        print("P0 Core Context (erste 500 Zeichen):")
+        print("=" * 60)
+        core = cm.get_core_context()
+        print(core[:500] + "...")
     
     print("\n" + "=" * 60)
     print("✅ Reflecty abgeschlossen")

@@ -23,6 +23,12 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
 import hashlib
 
+# Import Deliberate Disagreement
+try:
+    from .deliberate_disagreement import deliberate_disagreement
+except ImportError:
+    from deliberate_disagreement import deliberate_disagreement
+
 # ═══════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════
@@ -318,6 +324,14 @@ class GeniusQualityTracker:
         m4 = self.calculate_session_velocity(session_messages)
         m5 = self.detect_antifragile_resonance(session_messages)
         
+        # Prüfe auf Deliberate Disagreement Trigger
+        dd_result = None
+        if user_inputs:
+            last_user_input = user_inputs[-1]
+            dd_result = deliberate_disagreement(last_user_input, confidence=0.9)
+            if dd_result:
+                log('info', 'Deliberate Disagreement activated', {'input': last_user_input[:50]})
+        
         result = {
             "timestamp": datetime.now().isoformat(),
             "m1": m1,
@@ -325,10 +339,12 @@ class GeniusQualityTracker:
             "m3": m3,
             "m4": m4,
             "m5": m5,
+            "deliberate_disagreement": dd_result is not None,
+            "dd_output": dd_result,
             "overall_score": round((m1['score'] + m2['score'] + m3['score'] + m4['score'] + m5['score']) / 5, 3),
             "genius_moments": sum([
                 1 for m in [m1, m2, m3, m4, m5] if m.get('genius_threshold')
-            ])
+            ]) + (1 if dd_result else 0)
         }
         
         # Speichere Ergebnis
@@ -381,6 +397,15 @@ class GeniusQualityTracker:
         print("M5 — Anti-Fragile Resonanz:")
         print(f"   Score: {result['m5']['score']:.2f} {'🌟' if result['m5']['genius_threshold'] else ''}")
         print(f"   {result['m5']['explanation']}")
+        
+        # Zeige Deliberate Disagreement wenn aktiv
+        if result.get('deliberate_disagreement') and result.get('dd_output'):
+            print()
+            print("🎭 — Deliberate Disagreement:")
+            print("   🌟 Aktiviert (3 Perspektiven)")
+            print()
+            print(result['dd_output'][:500] + "..." if len(result['dd_output']) > 500 else result['dd_output'])
+        
         print("=" * 60)
 
 # ═══════════════════════════════════════════════════════════════════

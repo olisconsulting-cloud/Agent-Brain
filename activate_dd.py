@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-Deliberate Disagreement — Quick Activation Script
+Deliberate Disagreement v2.0 — DYNAMIC Three Perspectives
 
 Usage:
-    python3 activate_dd.py "#wichtig Deine Frage hier"
+    python3 activate_dd.py "wichtig Deine Frage hier"
     
-Or in OpenClaw:
-    exec python3 /data/.openclaw/workspace/smriti/activate_dd.py "#wichtig Soll ich X machen?"
+Aktiviert bei 'wichtig' in JEDEM Kontext!
 """
 
 import sys
@@ -17,26 +16,27 @@ WORKSPACE = os.environ.get('SMRITI_WORKSPACE', '/data/.openclaw/workspace')
 sys.path.insert(0, f'{WORKSPACE}/smriti/src/python')
 
 try:
-    from smriti.deliberate_disagreement import deliberate_disagreement
+    from smriti.deliberate_disagreement_v2 import deliberate_disagreement_v2
     
     # Get input from command line or use default
     if len(sys.argv) > 1:
         user_input = " ".join(sys.argv[1:])
     else:
-        user_input = "#wichtig Soll ich Docker für das neue Projekt verwenden?"
+        user_input = "wichtig Soll ich Docker für das neue Projekt verwenden?"
     
-    print("🎭 Deliberate Disagreement — 3 Perspectives")
+    print("🎭 Deliberate Disagreement v2.0 — DYNAMIC 3 Perspectives")
     print("=" * 60)
     print(f"Input: {user_input}")
     print()
     
-    result = deliberate_disagreement(user_input)
+    result = deliberate_disagreement_v2(user_input)
     
     if result:
         print(result)
     else:
-        print("❌ Nicht aktiviert (kein Trigger erkannt)")
-        print("Tippe '#wichtig' am Anfang deiner Frage")
+        print("❌ Nicht aktiviert")
+        print("Tipp: Schreibe 'wichtig' irgendwo in deine Frage")
+        print("Beispiel: 'Das ist wichtig: Soll ich X machen?'")
         
 except Exception as e:
     print(f"❌ Fehler: {e}")

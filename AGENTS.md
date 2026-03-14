@@ -229,10 +229,37 @@ Schicht 3: Gedächtnis
 
 ## 🧠 SMRITI v3.5 — Automatisch Aktiv
 
-### Session-Start (Automatisch Smriti laden):
+> ⚠️ **Wichtig:** Einmalig `./setup_cron.sh` ausführen für autonome Hintergrund-Prozesse!
+
+### Session-Start (Vollständige Initialisierung):
 ```
+# 1. Smriti Core Systeme
 exec bash /data/.openclaw/workspace/smriti/smriti-session-hook.sh
+
+# 2. OUROBOROS Bridge (Mutationen & Meta-Learning)
+exec node /data/.openclaw/workspace/smriti/src/js/ouroboros/mutation_engine.mjs --check-queue
+
+# 3. REFLECTY Context (Intent-basiertes Laden)
+exec python3 /data/.openclaw/workspace/smriti/src/python/reflecty/intent_analyzer.py
 ```
+
+### Autonome Systeme (Im Hintergrund):
+
+**Cron Jobs** (Einmalig setup mit `./setup_cron.sh`):
+- ✅ 08:00 — Morning Init (Trend-Analyse)
+- ✅ :30 jede Stunde — Auto-Optimizer (M1-M5 Tuning)
+- ✅ 22:00 — Evening Feedback (Tagesreview)
+- ✅ :00 jede Stunde — Mutation Check
+
+**Intent-basiertes Context Loading:**
+- Analysiert Input automatisch
+- Lädt P0 (immer) + P1 (bei Trigger) + P2 (Search)
+- Keine Keywords nötig
+
+**Auto-Optimization:**
+- Überwacht M1-M5 Scores
+- Bei < 3.0 → Automatische Anpassung
+- Type A Mutationen (sofort ausgeführt)
 
 ### Deliberate Disagreement (3 Perspektiven bei "wichtig"):
 ```
@@ -244,5 +271,7 @@ exec python3 /data/.openclaw/workspace/smriti/activate_dd.py "{{input}}"
 - ✅ Bei "wichtig": Optimist + Skeptiker + Devil's Advocate
 - ✅ Qualitäts-Tracking läuft im Hintergrund
 - ✅ Pattern-Mining aktiv
+- ✅ Auto-Optimierung bei schlechten Scores
+- ✅ Intent-basiertes Context Loading
 
 **Test:** Schreibe "wichtig Soll ich X machen?"

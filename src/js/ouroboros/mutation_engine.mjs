@@ -35,6 +35,18 @@ const PATHS = {
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const FORCE = process.argv.includes('--force');
+const CHECK_QUEUE = process.argv.includes('--check-queue');
+
+// ═══════════════════════════════════════════════════════════════════
+// MUTATION TYPES
+// ═══════════════════════════════════════════════════════════════════
+
+const MUTATION_TYPES = {
+  A: 'auto_execute',      // Low risk, auto-execute
+  B: 'approval_queue',    // Medium risk, queue for approval
+  C: 'human_decision',    // High risk, require explicit decision
+  D: 'agents_md_change'   // AGENTS.md changes, always require approval
+};
 
 // ═══════════════════════════════════════════════════════════════════
 // LOGGER
@@ -400,3 +412,84 @@ if (signal.auto || FORCE) {
 
 console.log();
 console.log('🐍 OUROBOROS complete');
+
+// ═══════════════════════════════════════════════════════════════════
+// AGENTS.md MUTATION HANDLER (Type D)
+// ═══════════════════════════════════════════════════════════════════
+
+function handleAgentsMDMutation(section, changeType, current, proposed, reason) {
+  log('INFO', 'Handling AGENTS.md mutation', { section, changeType });
+  
+  const mutation = {
+    id: `mut_agents_${Date.now()}`,
+    type: 'D',
+    type_name: MUTATION_TYPES.D,
+    source: 'reflecty_suggestion',
+    timestamp: new Date().toISOString(),
+    data: {
+      section,
+      change_type: changeType,
+      current,
+      proposed,
+      reason
+    },
+    requires_approval: true,
+    auto_execute: false,
+    display_text: `AGENTS.md [${section}]: ${changeType}`,
+    preview_diff: generateDiff(current, proposed)
+  };
+  
+  // Always add to approval queue
+  const approval = requestApproval(mutation);
+  
+  log('INFO', 'AGENTS.md mutation queued for approval', { 
+    mutation_id: mutation.id,
+    queue_file: PATHS.approvalQueue 
+  });
+  
+  return mutation.id;
+}
+
+function generateDiff(current, proposed) {
+  if (!current) return `+ ${proposed}`;
+  if (!proposed) return `- ${current}`;
+  return `- ${current}\n+ ${proposed}`;
+}
+
+function checkApprovalQueue() {
+  log('INFO', 'Checking approval queue...');
+  
+  if (!fs.existsSync(PATHS.approvalQueue)) {
+    console.log('📋 No approval queue found');
+    return [];
+  }
+  
+  try {
+    const queue = JSON.parse(fs.readFileSync(PATHS.approvalQueue, 'utf8'));
+    const pending = queue.filter(item => item.status === 'pending');
+    
+    console.log(`📋 Approval Queue: ${pending.length} pending`);
+    
+    pending.forEach((item, i) => {
+      console.log(`\n  ${i + 1}. [${item.type_name || item.type}] ${item.display_text || item.pattern}`);
+      console.log(`     ID: ${item.id}`);
+      if (item.preview_diff) {
+        console.log(`     Preview: ${item.preview_diff.substring(0, 100)}...`);
+      }
+    });
+    
+    return pending;
+  } catch (e) {
+    log('ERROR', 'Failed to read approval queue', { error: e.message });
+    return [];
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN ENTRY POINT
+// ═══════════════════════════════════════════════════════════════════
+
+if (CHECK_QUEUE) {
+  checkApprovalQueue();
+  process.exit(0);
+}

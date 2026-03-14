@@ -247,34 +247,34 @@ if (!fs.existsSync(ouroborosStatePath)) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// STEP 7: Start Memory Infrastructure
+// STEP 7: Memory Infrastructure (OPTIONAL)
 // ═══════════════════════════════════════════════════════════════════
 console.log();
-console.log('🐳 Step 7: Starting Memory Infrastructure');
+console.log('🐳 Step 7: Memory Infrastructure (Optional)');
+console.log('   ℹ️  Docker is optional. Smriti works without it using Layer 2 (File System).');
 
 const composeFile = path.join(SOURCE_DIR, 'docker-compose.yml');
 const destCompose = path.join(WORKSPACE, 'docker-compose-smriti.yml');
 
-if (fs.existsSync(composeFile)) {
+// Check if Docker is available
+let dockerAvailable = false;
+try {
+  execSync('docker --version', { stdio: 'ignore' });
+  dockerAvailable = true;
+} catch {
+  console.log('   ℹ️  Docker not found — using Layer 2 (File System) only');
+}
+
+if (dockerAvailable && fs.existsSync(composeFile)) {
   fs.copyFileSync(composeFile, destCompose);
   console.log('   ✅ Docker Compose copied');
   
-  try {
-    console.log('   🚀 Starting containers...');
-    execSync(`docker-compose -f ${destCompose} up -d`, { 
-      cwd: WORKSPACE,
-      stdio: 'pipe'
-    });
-    console.log('   ✅ Containers started');
-    
-    // Wait for services
-    console.log('   ⏳ Waiting for services (10s)...');
-    await new Promise(r => setTimeout(r, 10000));
-  } catch (e) {
-    console.log('   ⚠️  Docker start issue (may already be running)');
-  }
+  // Ask user if they want to start Docker
+  console.log('   💡 To start Docker containers manually:');
+  console.log('      docker-compose -f docker-compose-smriti.yml up -d');
+  console.log('   ℹ️  Skipping auto-start (optional feature)');
 } else {
-  console.log('   ⚠️  docker-compose.yml not found');
+  console.log('   ✅ Using Layer 2 (File System) — no Docker needed');
 }
 
 // ═══════════════════════════════════════════════════════════════════

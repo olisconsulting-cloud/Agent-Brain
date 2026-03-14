@@ -1,164 +1,89 @@
-# AGENTS.md — Smriti v3.5
+# AGENTS.md — Smriti v3.5 Full Integration
 
-> Five systems. Maximum intelligence, minimum complexity.
+## 🧠 Automatische Systeme (Immer Aktiv)
+
+### System 1: Quality Engine
+- Misst M1-M5 Metriken automatisch
+- Speichert in `neuron/m1m4_log.jsonl`
+
+### System 2: Pattern Engine (Reflecty)
+- Beobachtet im Hintergrund
+- Speichert Patterns in `neuron/patterns.jsonl`
+
+### System 3: Improvement Engine (OUROBOROS)
+- Prüft täglich auf Verbesserungen
+- Log: `neuron/ouroboros_mutations.jsonl`
+
+### System 4: BRIDGE
+- Verbindet alle Systeme
+- Status: `neuron/.bridge_state.json`
+
+### System 5: Memory Infrastructure
+- Layer 2: Immer aktiv (Dateien)
+- Layer 3: Mit Fallback (mem0)
 
 ---
 
-## 🚀 Startup Sequence (1 File)
+## 🎭 Manuelle Aktivierung (Bei Bedarf)
 
-**Only file you MUST load:**
+### Deliberate Disagreement (3 Perspektiven)
+**Wann:** Bei wichtigen Entscheidungen
+**Wie:** Schreibe "wichtig" in deine Frage
+
 ```
-neuron/smriti.json → Contains all 5 system configurations
-```
-
-**What smriti.json automatically references:**
-- neuron/ouroboros.json (self-improvement settings)
-- neuron/bridge.json (integration settings)  
-- neuron/memory/*.json (memory layer settings)
-- neuron/*.jsonl (data files - auto-created)
-
-**Optional: Load manually if you want direct access:**
-- AGENTS.md → This file (process documentation)
-- HEARTBEAT.md → Maintenance cycles
-
-**Note:** You do NOT need to load ouroboros.json, bridge.json, or memory configs separately. smriti.json handles all references internally.
-
----
-
-## 🧠 THE FIVE SYSTEMS
-
-### System 1: QUALITY ENGINE (Always On)
-
-**Before every response:**
-1. Scan for triggers (9 categories)
-2. If critical/high: 30s reflection
-3. 3 counter-arguments (Optimist, Skeptic, Devil's Advocate)
-4. Confidence score
-5. Then respond
-
-**Output:**
-```
-[🟢/🟡/🔴] | Confidence: 0.XX
-
---- REFLECTION ---
-🎯 Intuition: ___
-⚔️ Counter: 1)___ 2)___ 3)___
-🔍 Edge cases: ___
---- ANSWER ---
-[Response]
+exec python3 /data/.openclaw/workspace/smriti/activate_dd.py "{{input}}"
 ```
 
----
-
-### System 2: PATTERN ENGINE (Background)
-
-**Continuously:**
-- **L1 Observer:** Watch for patterns
-- **L2 Blender:** Cross-domain analogies
-- **L3 Oracle:** 7-day predictions
-
-**Output:**
-- 80%: Silent (store only)
-- 20%: Voice (share insight)
-
-**When confidence > 0.9:**
-→ Send to BRIDGE → OUROBOROS considers mutation
+**Beispiel:**
+- "Das ist wichtig: Soll ich Docker verwenden?"
+- "wichtig! Neue Marketing-Strategie"
 
 ---
 
-### System 3: IMPROVEMENT ENGINE (Automatic)
+## 🚀 Session Start (Einmalig)
 
-**On every error:**
-- Log to anti_patterns.jsonl
-- OUROBOROS analyzes
-- Adjust thresholds weekly
-
-**Mutation types:**
-- **A:** Parameter tuning (auto)
-- **B:** Structural changes (notify)
-
----
-
-### System 4: BRIDGE (Real-time)
-
-**Function:** Connect Pattern ↔ Improvement
-
-**Flow:**
 ```
-Reflecty (high confidence pattern)
-    ↓
-BRIDGE (route event)
-    ↓
-OUROBOROS (consider mutation)
-    ↓
-Validation (Reflecty L3 tracks)
-    ↓
-Keep or Rollback
+exec bash /data/.openclaw/workspace/smriti/smriti-session-hook.sh
 ```
 
-**Conflict resolution:**
-- Higher confidence wins
-- Or: User decides
+**Was passiert:**
+- Alle 5 Systeme initialisieren
+- Environment laden
+- Health-Checks durchführen
 
 ---
 
-### System 5: MEMORY (Infrastructure)
+## 📊 Monitoring
 
-**Layer 2 (Required):**
-- File system storage
-- Daily logs → Weekly condensation
+```
+# Logs ansehen
+exec tail -f /data/.openclaw/workspace/logs/quality_tracker.log
 
-**Layer 3 (Recommended):**
-- mem0 + Qdrant
-- Semantic search
-- Pattern retrieval
+# BRIDGE Status
+exec python3 -c "from neuron.bridge_connector import bridge_status; print(bridge_status())"
 
-**Layer 4 (Optional):**
-- Neo4j graph
-- Relationship mapping
+# M1-M4 Metriken
+exec tail -f /data/.openclaw/workspace/neuron/m1m4_log.jsonl
+```
 
 ---
 
-## 🔧 Tool Rules
+## 🛠️ Tools
 
-- Max 5 tools per response
-- Report failures immediately
-- Checkpoint after changes
-
----
-
-## 🤖 Sub-Agents
-
-**Spawn when:**
-- "research" → researcher
-- "build" → coder
-- "review" → reflector
-
-**Usage:** `sessions_spawn` with `runtime="subagent"`
+- web_search
+- web_fetch
+- file_read
+- file_write
+- exec (für Smriti-Integration)
 
 ---
 
-## 📝 Memory Management
+## 💡 Hinweise
 
-| Layer | Frequency | Action |
-|-------|-----------|--------|
-| 2 | Daily | Write to draft-YYYY-MM-DD.md |
-| 2 | Weekly | Condense to MEMORY.md |
-| 3 | Continuous | Sync to mem0 |
-| 3 | On query | Semantic search |
+- **Automatisch:** Quality, Pattern, Improvement, BRIDGE, Memory
+- **Manuell:** Deliberate Disagreement (bei "wichtig")
+- **Session-Start:** Einmalig `smriti-session-hook.sh` ausführen
 
 ---
 
-## 🔄 Integration Points
-
-| System | Connects To | Via |
-|--------|-------------|-----|
-| Quality | All | Direct |
-| Pattern | Bridge | Events |
-| Bridge | OUROBOROS | Commands |
-| OUROBOROS | Pattern | Validation |
-| Memory | All | API/Files |
-
----
-
-*Smriti v3.5. Five systems, one intelligence.*
+*Smriti v3.5 — Production Ready*

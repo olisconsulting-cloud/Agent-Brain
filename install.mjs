@@ -114,7 +114,9 @@ const pythonComponents = [
   { src: 'src/python/reflecty/reflecty.py', dest: 'agents/reflecty/reflecty.py' },
   { src: 'src/python/smriti/quality_tracker.py', dest: 'smriti/quality_tracker.py' },
   { src: 'src/python/smriti/deliberate_disagreement.py', dest: 'smriti/deliberate_disagreement.py' },
+  { src: 'src/python/smriti/deliberate_disagreement_v2.py', dest: 'smriti/deliberate_disagreement_v2.py' },
   { src: 'activate_dd.py', dest: 'activate_dd.py' },
+  { src: 'auto_detect_wichtig.py', dest: 'auto_detect_wichtig.py' },
 ];
 
 for (const { src, dest } of pythonComponents) {

@@ -1,0 +1,18 @@
+# OUROBOROS Mutations Log
+
+> Record of all system mutations
+
+## Format
+
+```json
+{
+  "timestamp": "2026-03-14T16:00:00Z",
+  "mutation_id": "mut_001",
+  "type": "A|B|C",
+  "description": "What changed",
+  "trigger": "What caused it",
+  "approval": "auto|user|pending",
+  "status": "active|rolled_back|validated",
+  "impact": "measured_effect"
+}
+```

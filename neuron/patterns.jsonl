@@ -1,0 +1,22 @@
+# Pattern Storage
+
+> Reflecty L1 Observer output
+
+## Format
+
+```json
+{
+  "timestamp": "2026-03-14T16:00:00Z",
+  "session_id": "uuid",
+  "pattern_type": "communication|tool_usage|decision|error",
+  "signature": "hashed_identifier",
+  "confidence": 0.85,
+  "frequency": 3,
+  "context": "brief_description",
+  "domains": ["biology", "physics"]
+}
+```
+
+## Usage
+
+Auto-populated by Reflecty. Do not edit manually.

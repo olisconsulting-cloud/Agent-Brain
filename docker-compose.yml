@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # Layer 3: Semantic Memory (RECOMMENDED)
+  mem0:
+    image: mem0/mem0:latest
+    container_name: smriti-mem0
+    ports:
+      - "8000:8000"
+    environment:
+      - MEM0_DB_URL=postgresql://postgres:password@postgres:5432/mem0
+      - MEM0_VECTOR_STORE=qdrant
+      - MEM0_QDRANT_URL=http://qdrant:6333
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    depends_on:
+      - postgres
+      - qdrant
+    volumes:
+      - mem0-data:/app/data
+    networks:
+      - smriti-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: smriti-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mem0
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - smriti-network
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: smriti-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - smriti-network
+    restart: unless-stopped
+
+  # Layer 4: Graph Knowledge (OPTIONAL - Advanced)
+  neo4j:
+    image: neo4j:5-community
+    container_name: smriti-neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      - NEO4J_dbms_memory_heap_max__size=1G
+    volumes:
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+    networks:
+      - smriti-network
+    restart: unless-stopped
+    profiles:
+      - complete
+
+volumes:
+  mem0-data:
+    driver: local
+  postgres-data:
+    driver: local
+  qdrant-data:
+    driver: local
+  neo4j-data:
+    driver: local
+  neo4j-logs:
+    driver: local
+
+networks:
+  smriti-network:
+    driver: bridge
+    name: smriti-network

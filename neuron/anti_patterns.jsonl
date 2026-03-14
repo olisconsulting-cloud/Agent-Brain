@@ -1,0 +1,29 @@
+# Anti-Pattern Database
+
+> Errors are 3x more valuable than successes
+
+## Format
+
+```json
+{
+  "timestamp": "2026-03-14T16:00:00Z",
+  "category": "tool|memory|reasoning|communication",
+  "severity": "low|medium|high|critical",
+  "description": "What happened",
+  "context": "Session context",
+  "root_cause": "Why it happened",
+  "prevention": "How to prevent",
+  "depth": "surface|context|structural|meta|philosophical"
+}
+```
+
+## Core Rule
+
+After EVERY error → IMMEDIATELY log here.
+
+## Categories
+
+- **tool**: Wrong tool, incorrect usage, timeout
+- **memory**: Forgot preference, wrong context
+- **reasoning**: Logical fallacy, wrong assumption
+- **communication**: Misunderstood, wrong tone

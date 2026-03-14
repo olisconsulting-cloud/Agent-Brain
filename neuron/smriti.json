@@ -1,0 +1,187 @@
+{
+  "name": "Smriti v3.5 Enhanced",
+  "version": "3.5",
+  "description": "Five systems: Quality, Pattern, Improvement, Bridge, Memory",
+  "philosophy": "Essential complexity only",
+  
+  "system_1_quality": {
+    "name": "Quality Engine",
+    "purpose": "Think before speaking",
+    "status": "always_on",
+    
+    "triggers": {
+      "categories": {
+        "strategic": {
+          "level": "critical",
+          "keywords": ["strategy", "vision", "roadmap", "long-term"],
+          "action": "30s reflection + alternatives"
+        },
+        "risk": {
+          "level": "critical",
+          "keywords": ["risk", "error", "problem", "crisis"],
+          "action": "Risk analysis + counter-position"
+        },
+        "decision": {
+          "level": "high",
+          "keywords": ["decide", "should I", "recommendation"],
+          "action": "Pros/cons + long-term consequences"
+        },
+        "innovation": {
+          "level": "high",
+          "keywords": ["new", "innovative", "revolutionary"],
+          "action": "Potential check + obstacles"
+        },
+        "system": {
+          "level": "high",
+          "keywords": ["system", "architecture", "process"],
+          "action": "2nd/3rd order effects + edge cases"
+        },
+        "meta": {
+          "level": "critical",
+          "keywords": ["why", "fundamentally", "essence"],
+          "action": "5-Whys + first principles"
+        }
+      }
+    },
+    
+    "deliberate_disagreement": {
+      "personas": ["optimist", "skeptic", "devils_advocate"],
+      "activation": "confidence > 0.8",
+      "flow": "A → B contradicts → C deconstructs → SYNTHESIS"
+    },
+    
+    "uncertainty": {
+      "green": {"threshold": "< 20%", "action": "standard"},
+      "yellow": {"threshold": "20-50%", "action": "disclaimer"},
+      "red": {"threshold": "> 50%", "action": "decline or limit scope"}
+    }
+  },
+  
+  "system_2_pattern": {
+    "name": "Pattern Engine",
+    "purpose": "Learn across sessions",
+    "status": "background",
+    
+    "l1_observer": {
+      "inputs": ["messages", "tools", "decisions", "errors"],
+      "storage": "neuron/patterns.jsonl",
+      "frequency": "continuous"
+    },
+    
+    "l2_blender": {
+      "domains": ["biology", "physics", "mathematics", "history", "art", "architecture"],
+      "trigger": "blocked or seeking insight",
+      "output": "analogy"
+    },
+    
+    "l3_oracle": {
+      "horizon": "7 days",
+      "validation": "compare to reality",
+      "high_confidence_threshold": 0.9,
+      "action_on_high": "send_to_bridge"
+    },
+    
+    "output": {
+      "silent": "80% - store only",
+      "voice": "20% - share insight"
+    }
+  },
+  
+  "system_3_improvement": {
+    "name": "Improvement Engine",
+    "purpose": "Grow through mistakes",
+    "status": "automatic",
+    
+    "anti_patterns": {
+      "principle": "errors 3x valuable",
+      "log": "neuron/anti_patterns.jsonl",
+      "action": "immediate logging",
+      "analysis": "weekly review"
+    },
+    
+    "ouroboros": {
+      "mutation_a": {"type": "parameter", "auto": true, "approval": false},
+      "mutation_b": {"type": "structural", "auto": false, "approval": true},
+      "validation": "prediction vs reality",
+      "frequency": "weekly review"
+    }
+  },
+  
+  "system_4_bridge": {
+    "name": "Bridge",
+    "purpose": "Connect Pattern ↔ Improvement",
+    "status": "realtime",
+    
+    "flow": {
+      "reflecty_to_ouroboros": {
+        "trigger": "pattern confidence >= 0.9",
+        "action": "consider mutation"
+      },
+      "ouroboros_to_reflecty": {
+        "trigger": "mutation applied",
+        "action": "track in L3 Oracle"
+      }
+    },
+    
+    "conflict_resolution": [
+      "Higher confidence wins",
+      "If equal: user decides",
+      "If unavailable: maintain status quo"
+    ],
+    
+    "storage": "neuron/.bridge_state.json"
+  },
+  
+  "system_5_memory": {
+    "name": "Memory Infrastructure",
+    "purpose": "Technical foundation",
+    
+    "layer_2": {
+      "type": "file_system",
+      "status": "required",
+      "path": "data/memory/",
+      "format": "markdown"
+    },
+    
+    "layer_3": {
+      "type": "semantic",
+      "status": "recommended",
+      "tech": "mem0 + Qdrant",
+      "url": "http://localhost:8000"
+    },
+    
+    "layer_4": {
+      "type": "graph",
+      "status": "recommended",
+      "tech": "Neo4j",
+      "url": "http://localhost:7474",
+      "note": "While system works without Layer 4, pattern relationships significantly improve intelligence. Start with 'docker-compose --profile complete up' to enable."
+    }
+  },
+  
+  "integration": {
+    "startup_order": [
+      "Load configs",
+      "Initialize Quality (always on)",
+      "Start Pattern (background)",
+      "Connect Bridge (listeners)",
+      "Activate Improvement (auto)",
+      "Check Memory (layers 2-3)"
+    ],
+    
+    "runtime_flow": [
+      "Quality scans input",
+      "Pattern observes continuously",
+      "High confidence → Bridge → OUROBOROS",
+      "All stores in Memory",
+      "OUROBOROS validates via Pattern L3"
+    ]
+  },
+  
+  "success_metrics": {
+    "reflection_quality": "User satisfaction",
+    "pattern_accuracy": "Prediction hit rate",
+    "improvement_rate": "Errors leading to changes",
+    "bridge_efficiency": "Events routed correctly"
+  }
+}

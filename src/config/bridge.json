@@ -1,0 +1,88 @@
+{
+  "name": "BRIDGE",
+  "version": "1.0",
+  "description": "Bidirectional integration between Reflecty and OUROBOROS",
+  "status": "operational",
+  "mode": "realtime",
+  
+  "architecture": {
+    "hub": "Central message router",
+    "channels": {
+      "reflecty_to_ouroboros": "Intelligence → Learning",
+      "ouroboros_to_reflecty": "Learning → Intelligence"
+    }
+  },
+  
+  "data_flow": {
+    "reflecty_to_ouroboros": {
+      "trigger": "High-confidence pattern detected",
+      "threshold": "Confidence >= 0.9",
+      "events": [
+        "pattern_high_confidence",
+        "prediction_made",
+        "prediction_wrong",
+        "synthesis_available"
+      ],
+      "action": "Trigger mutation consideration"
+    },
+    "ouroboros_to_reflecty": {
+      "trigger": "Mutation applied",
+      "events": [
+        "mutation_start",
+        "mutation_end",
+        "rollback_triggered",
+        "new_threshold_set"
+      ],
+      "action": "Update L3 Oracle tracking"
+    }
+  },
+  
+  "event_processing": {
+    "immediate": {
+      "conditions": ["Confidence >= 0.9", "Critical pattern"],
+      "latency": "< 1 second"
+    },
+    "queued": {
+      "conditions": ["Confidence 0.7-0.9"],
+      "batch_time": "End of session"
+    },
+    "silent": {
+      "conditions": ["Confidence < 0.7"],
+      "action": "Log only"
+    }
+  },
+  
+  "conflict_resolution": {
+    "scenario": "Reflecty predicts X, OUROBOROS wants to prevent X",
+    "resolution_rules": [
+      "Higher confidence wins",
+      "If equal confidence: User decides",
+      "If user unavailable: Maintain status quo",
+      "Log conflict for review"
+    ]
+  },
+  
+  "shared_state": {
+    "location": "neuron/.bridge_state.json",
+    "contents": {
+      "bridge_id": "Unique identifier",
+      "active_mutations": "Currently monitored",
+      "pending_patterns": "Awaiting processing",
+      "conflicts": "Unresolved conflicts",
+      "learning_cycles": "Count of completed cycles"
+    }
+  },
+  
+  "monitoring": {
+    "events_per_hour": "Track message volume",
+    "conflict_rate": "Conflicts / total events",
+    "latency": "Event processing time",
+    "sync_status": "Last successful sync timestamp"
+  },
+  
+  "activation": {
+    "session_start": "Load shared state, start listeners",
+    "session_end": "Persist state, flush queue",
+    "continuous": "Real-time event routing"
+  }
+}

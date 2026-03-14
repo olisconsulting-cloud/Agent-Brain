@@ -1,0 +1,68 @@
+{
+  "layer": 3,
+  "name": "Semantic Memory",
+  "type": "semantic",
+  "status": "recommended",
+  "description": "Vector-based semantic search via mem0 and Qdrant",
+  
+  "components": {
+    "api": {
+      "provider": "mem0",
+      "url": "http://localhost:8000",
+      "health_endpoint": "/health"
+    },
+    "vector_store": {
+      "provider": "qdrant",
+      "url": "http://localhost:6333",
+      "collection": "smriti_memories"
+    },
+    "database": {
+      "provider": "postgres",
+      "host": "localhost",
+      "port": 5432,
+      "database": "mem0"
+    }
+  },
+  
+  "embedding": {
+    "model": "text-embedding-3-small",
+    "dimensions": 1536,
+    "chunk_size": 512,
+    "chunk_overlap": 50
+  },
+  
+  "operations": {
+    "store": {
+      "endpoint": "POST /memories",
+      "fields": ["content", "metadata", "user_id", "agent_id"]
+    },
+    "search": {
+      "endpoint": "POST /memories/search",
+      "parameters": ["query", "limit", "filters"],
+      "default_limit": 5
+    },
+    "get": {
+      "endpoint": "GET /memories/{id}"
+    },
+    "delete": {
+      "endpoint": "DELETE /memories/{id}"
+    }
+  },
+  
+  "integration": {
+    "with_smriti": "Store insights, retrieve context",
+    "with_reflecty": "Pattern storage and retrieval",
+    "with_agents": "Cross-session memory"
+  },
+  
+  "fallback": {
+    "if_unavailable": "Use Layer 2 (File System)",
+    "sync_on_recovery": "true"
+  },
+  
+  "startup_check": {
+    "command": "curl -s http://localhost:8000/health",
+    "expected": '{"status": "ok"}',
+    "timeout_seconds": 5
+  }
+}

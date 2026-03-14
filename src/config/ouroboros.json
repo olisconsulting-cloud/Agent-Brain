@@ -1,0 +1,86 @@
+{
+  "name": "OUROBOROS",
+  "version": "1.0",
+  "description": "Self-improvement through mutation and validation",
+  "status": "operational",
+  "mode": "background",
+  
+  "principle": "Meta-learning: The system improves itself",
+  
+  "mutation_types": {
+    "type_a": {
+      "name": "Parameter Tuning",
+      "description": "Adjust thresholds, weights, confidence levels",
+      "examples": [
+        "Increase quality trigger threshold from 0.8 to 0.85",
+        "Adjust reflection depth based on success rate",
+        "Modify token limits for sub-agents"
+      ],
+      "approval_required": false,
+      "auto_rollback": true
+    },
+    "type_b": {
+      "name": "Structural Changes",
+      "description": "Add/remove triggers, rules, categories",
+      "examples": [
+        "Add new trigger category for 'security'",
+        "Remove unused reflection steps",
+        "Add new domain to Reflecty Blender"
+      ],
+      "approval_required": true,
+      "auto_rollback": false
+    },
+    "type_c": {
+      "name": "Architectural Changes",
+      "description": "Add new systems, change core architecture",
+      "examples": [
+        "Add new Layer to Reflecty",
+        "Replace Bridge with direct integration",
+        "Add new anti-fragile system"
+      ],
+      "approval_required": true,
+      "auto_rollback": false,
+      "user_notification": "always"
+    }
+  },
+  
+  "validation_loop": {
+    "step_1": "Apply mutation",
+    "step_2": "Reflecty monitors (L3 Oracle tracks)",
+    "step_3": "Compare prediction vs. reality",
+    "step_4": "Measure impact on metrics",
+    "step_5": "Decision: Keep, Rollback, or Refine"
+  },
+  
+  "metrics_tracked": {
+    "response_quality": "User satisfaction score",
+    "prediction_accuracy": "Reflecty L3 hit rate",
+    "error_rate": "Anti-patterns per session",
+    "efficiency": "Tokens used vs. outcome quality",
+    "adaptation_speed": "Time to recognize user change"
+  },
+  
+  "activation": {
+    "trigger_conditions": [
+      "3+ similar anti-patterns detected",
+      "User explicitly requests improvement",
+      "Metrics show degradation over 5 sessions",
+      "New pattern confidence > 0.9 from Reflecty"
+    ],
+    "frequency": "Maximum 1 Type B/C mutation per week",
+    "type_a_frequency": "Continuous background"
+  },
+  
+  "storage": {
+    "mutations_log": "neuron/ouroboros_mutations.jsonl",
+    "validation_results": "neuron/ouroboros_validations.jsonl",
+    "current_state": "neuron/ouroboros_state.json"
+  },
+  
+  "integration": {
+    "with_reflecty": "L3 Oracle validates predictions",
+    "with_bridge": "Mutations communicated to Reflecty",
+    "with_anti_patterns": "Patterns trigger mutations",
+    "with_heartbeat": "Monthly mutation review"
+  }
+}

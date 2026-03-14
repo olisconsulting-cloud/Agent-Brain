@@ -1,0 +1,53 @@
+{
+  "layer": 2,
+  "name": "File System Memory",
+  "type": "file_system",
+  "status": "required",
+  "description": "Persistent storage via Markdown and JSON files",
+  
+  "storage": {
+    "base_path": "data/memory/",
+    "daily_logs": "data/memory/drafts/",
+    "condensed": "MEMORY.md",
+    "patterns": "neuron/patterns/",
+    "format": "markdown",
+    "naming_convention": "YYYY-MM-DD.md"
+  },
+  
+  "operations": {
+    "write": {
+      "frequency": "daily",
+      "trigger": "session_end",
+      "format": "markdown with frontmatter"
+    },
+    "read": {
+      "method": "file_read",
+      "scope": "first_100_lines for MEMORY.md"
+    },
+    "condense": {
+      "frequency": "weekly",
+      "source": "daily_logs",
+      "target": "MEMORY.md"
+    },
+    "clean": {
+      "frequency": "monthly",
+      "rule": "remove entries older than 2 weeks from daily logs"
+    }
+  },
+  
+  "structure": {
+    "daily_log_template": "# Draft YYYY-MM-DD\n\n## Session 1\n- Key: value\n- Insight: ...\n\n## Session 2\n...",
+    "memory_md_sections": [
+      "User Profile",
+      "Key Insights",
+      "Active Projects",
+      "Lessons Learned"
+    ]
+  },
+  
+  "backup": {
+    "enabled": true,
+    "frequency": "weekly",
+    "retention": "3 months"
+  }
+}

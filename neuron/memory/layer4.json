@@ -1,0 +1,80 @@
+{
+  "layer": 4,
+  "name": "Graph Knowledge",
+  "type": "graph",
+  "status": "recommended",
+    "note": "While technically optional, Layer 4 provides significant value for pattern relationships and is recommended for production use",
+  "description": "Relationship mapping via Neo4j for advanced pattern analysis",
+  
+  "components": {
+    "database": {
+      "provider": "neo4j",
+      "url": "bolt://localhost:7687",
+      "browser_url": "http://localhost:7474",
+      "auth": {
+        "username": "neo4j",
+        "password": "password"
+      }
+    }
+  },
+  
+  "schema": {
+    "nodes": {
+      "Pattern": {
+        "properties": ["id", "type", "confidence", "first_seen", "frequency"]
+      },
+      "Concept": {
+        "properties": ["id", "name", "domain"]
+      },
+      "Session": {
+        "properties": ["id", "timestamp", "mode"]
+      }
+    },
+    "relationships": {
+      "RELATES_TO": {
+        "from": "Pattern",
+        "to": "Pattern",
+        "properties": ["strength", "type"]
+      },
+      "INSTANCE_OF": {
+        "from": "Pattern",
+        "to": "Concept"
+      },
+      "APPEARS_IN": {
+        "from": "Pattern",
+        "to": "Session"
+      }
+    }
+  },
+  
+  "use_cases": {
+    "pattern_networks": "Find related patterns",
+    "trend_analysis": "Track pattern evolution",
+    "anomaly_detection": "Find outliers in pattern graph",
+    "recommendation": "Suggest based on pattern similarity"
+  },
+  
+  "operations": {
+    "create_pattern": "MERGE (p:Pattern {id: $id}) SET p += $props RETURN p",
+    "relate_patterns": "MATCH (p1:Pattern {id: $id1}), (p2:Pattern {id: $id2}) MERGE (p1)-[r:RELATES_TO]->(p2) SET r.strength = $strength",
+    "find_related": "MATCH (p:Pattern {id: $id})-[:RELATES_TO]-(related) RETURN related",
+    "pattern_path": "MATCH path = shortestPath((p1:Pattern {id: $id1})-[:RELATES_TO*]-(p2:Pattern {id: $id2})) RETURN path"
+  },
+  
+  "integration": {
+    "with_reflecty": "L2 Blender uses graph for analogies",
+    "with_ouroboros": "Track mutation effects on pattern network"
+  },
+  
+  "activation": {
+    "trigger": "docker-compose --profile complete up",
+    "startup_check": "curl -s http://localhost:7474",
+    "fallback": "Skip Layer 4, use Layer 3 only"
+  },
+  
+  "performance": {
+    "note": "Slower than Layer 3, use for complex queries only",
+    "cache_results": true,
+    "batch_operations": true
+  }
+}

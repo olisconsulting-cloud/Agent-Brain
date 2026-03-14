@@ -1,0 +1,16 @@
+# OUROBOROS Validations Log
+
+> Validation results for mutations
+
+## Format
+
+```json
+{
+  "timestamp": "2026-03-14T16:00:00Z",
+  "mutation_id": "mut_001",
+  "prediction": "Expected outcome",
+  "reality": "Actual outcome",
+  "accuracy": 0.85,
+  "decision": "keep|rollback|refine"
+}
+```

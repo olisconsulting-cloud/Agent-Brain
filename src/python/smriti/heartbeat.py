@@ -19,6 +19,7 @@ Features:
 import json
 import os
 import time
+import fcntl
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -240,12 +241,18 @@ class Heartbeat:
         return deleted
     
     def _save_metrics(self, metrics: HealthMetrics):
-        """Save metrics to file"""
+        """Save metrics to file with locking"""
         try:
             with open(self.metrics_file, 'a') as f:
-                f.write(json.dumps(metrics.to_dict()) + '\n')
-        except Exception:
-            pass  # Fail silently
+                # Lock file for exclusive access
+                fcntl.flock(f, fcntl.LOCK_EX)
+                try:
+                    f.write(json.dumps(metrics.to_dict()) + '\n')
+                finally:
+                    fcntl.flock(f, fcntl.LOCK_UN)
+        except Exception as e:
+            # Log error but don't crash
+            print(f"[Heartbeat] Warning: Could not save metrics: {e}")
     
     def _update_status_file(self, metrics: HealthMetrics):
         """Update quick status file"""

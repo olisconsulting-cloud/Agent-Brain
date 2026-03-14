@@ -14,18 +14,19 @@
 ```bash
 # 1. Download Smriti v3.5
 cd /your/openclaw/workspace
-git clone https://github.com/your-org/smriti-v3.5.git
+git clone https://github.com/olisconsulting-cloud/Agent-Brain.git smriti
 
 # 2. Install (ONE COMMAND)
-node smriti-v3.5/install.mjs
+cd smriti
+node install.mjs
 
-# 3. Source environment
-source .smriti_env
+# 3. Auto-Setup (Fügt sich in AGENTS.md ein)
+bash setup-auto.sh
 
-# 4. Done! Smriti is now active.
+# 4. Done! Smriti ist jetzt automatisch aktiv.
 ```
 
-**That's it.** No manual config. No Docker commands. No Python setup.
+**That's it.** Nach Restart: Alle 5 Systeme automatisch + Deliberate Disagreement bei "wichtig".
 
 ---
 

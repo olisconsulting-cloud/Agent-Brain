@@ -40,8 +40,15 @@ class DeliberateDisagreementV2:
     
     def extract_topic(self, user_input: str) -> str:
         """Extrahiert das Thema aus dem Input"""
-        # Entferne "wichtig" und Satzzeichen
-        topic = re.sub(r'\bwichtig\b[\s:!.,]*', '', user_input, flags=re.IGNORECASE).strip()
+        # Entferne "wichtig" und Satzzeichen am Anfang
+        topic = re.sub(r'^.*?\bwichtig\b[\s:!.,]*', '', user_input, flags=re.IGNORECASE).strip()
+        
+        # Entferne Frage-Wörter am Anfang
+        topic = re.sub(r'^(soll ich|sollten wir|müssen wir|kann ich|will ich)\s+', '', topic, flags=re.IGNORECASE)
+        
+        # Entferne Satzzeichen am Ende
+        topic = re.sub(r'[?.!]+$', '', topic).strip()
+        
         return topic if topic else "Das vorgeschlagene Vorhaben"
     
     def analyze_topic(self, topic: str) -> Dict:

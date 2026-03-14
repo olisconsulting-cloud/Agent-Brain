@@ -23,7 +23,7 @@ class DeliberateDisagreement:
     """Drei Perspektiven für bessere Entscheidungen"""
     
     def __init__(self):
-        self.trigger_keywords = ["#wichtig", "wichtig:", "krítisch", "strategisch", "entscheidend"]
+        self.trigger_keywords = ["#wichtig", "wichtig", "wichtig:", "krítisch", "strategisch", "entscheidend"]
         self.confidence_threshold = 0.8
         
         self.personas = {

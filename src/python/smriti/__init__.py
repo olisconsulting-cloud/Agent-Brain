@@ -5,6 +5,7 @@ from .quality_tracker import GeniusQualityTracker
 from .heartbeat_monitor import HeartbeatMonitor, get_monitor
 from .auto_tuner import AutoTuner
 from .chaos_monkey import ChaosMonkey
+from .self_healing_engine import SelfHealingEngine
 
 __all__ = [
     'deliberate_disagreement', 'DeliberateDisagreement',
@@ -12,5 +13,6 @@ __all__ = [
     'GeniusQualityTracker',
     'HeartbeatMonitor', 'get_monitor',
     'AutoTuner',
-    'ChaosMonkey'
+    'ChaosMonkey',
+    'SelfHealingEngine'
 ]

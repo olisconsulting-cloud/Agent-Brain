@@ -27,6 +27,7 @@ sys.path.insert(0, str(WORKSPACE / 'smriti' / 'src' / 'python'))
 from smriti.heartbeat_monitor import HeartbeatMonitor, get_monitor
 from smriti.auto_tuner import AutoTuner
 from smriti.chaos_monkey import ChaosMonkey
+from smriti.self_healing_engine import SelfHealingEngine
 
 def main():
     parser = argparse.ArgumentParser(description='Heartbeat Master v3.5')
@@ -34,6 +35,7 @@ def main():
     parser.add_argument('--tune', action='store_true', help='Führt Auto-Tuning durch')
     parser.add_argument('--chaos', action='store_true', help='Führt Chaos-Monkey-Test durch')
     parser.add_argument('--full', action='store_true', help='Führt kompletten Check durch')
+    parser.add_argument('--heal', action='store_true', help='Führt Self-Healing durch')
     
     args = parser.parse_args()
     
@@ -105,6 +107,32 @@ def main():
         # 4. Chaos-Monkey (optional)
         print("\n4. Chaos-Monkey Test:")
         print("   Führe aus mit: python3 heartbeat_master.py --chaos")
+        
+        # 5. Self-Healing (optional)
+        print("\n5. Self-Healing:")
+        print("   Führe aus mit: python3 heartbeat_master.py --heal")
+    
+    elif args.heal:
+        # Self-Healing
+        print("🔧 Starte Self-Healing...")
+        engine = SelfHealingEngine()
+        
+        print("\n1. Health-Check:")
+        health = engine.health_check()
+        print(f"   Status: {health['status']}")
+        print(f"   Probleme: {health['total_issues']}")
+        
+        if health['issues']:
+            print("\n2. Gefundene Probleme:")
+            for issue in health['issues']:
+                print(f"   • {issue['description']}")
+            
+            print("\n3. Heilung wird durchgeführt...")
+            results = engine.heal(auto=True)
+            for result in results:
+                print(f"   {result}")
+        else:
+            print("\n✅ System gesund — keine Heilung nötig!")
     
     else:
         # Standard: Zeige Hilfe
@@ -112,9 +140,10 @@ def main():
         print("  python3 heartbeat_master.py --dashboard  # Zeigt Dashboard")
         print("  python3 heartbeat_master.py --tune      # Auto-Tuning")
         print("  python3 heartbeat_master.py --chaos       # Chaos-Monkey")
+        print("  python3 heartbeat_master.py --heal         # Self-Healing")
         print("  python3 heartbeat_master.py --full        # Kompletter Check")
         print()
-        print("Status: 🟢 Operational")
+        print("Status: 🟢 Operational → 🟡 Self-Monitoring → 🔴 Self-Healing")
 
 if __name__ == "__main__":
     main()

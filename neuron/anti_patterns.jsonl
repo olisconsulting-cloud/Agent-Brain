@@ -27,3 +27,49 @@ After EVERY error → IMMEDIATELY log here.
 - **memory**: Forgot preference, wrong context
 - **reasoning**: Logical fallacy, wrong assumption
 - **communication**: Misunderstood, wrong tone
+
+---
+
+## Entries
+
+### 2026-03-11T10:30:00+01:00 — exec_tool_blocked_v1
+```json
+{
+  "timestamp": "2026-03-11T10:30:00+01:00",
+  "category": "tool",
+  "severity": "critical",
+  "description": "Tool 'exec' nicht verfügbar trotz erfolgreichem 'read'. System sagt 'Tool not found' statt Permission Denied.",
+  "context": "Session mit Tool-Usage",
+  "root_cause": "Policy-Check nicht durchgeführt vor Tool-Nutzung",
+  "prevention": "Vor jeder Session: Tool-Liste abfragen. Fallback-Strategie für blocked Tools bereithalten.",
+  "depth": "structural"
+}
+```
+
+### 2026-03-11T12:57:37+01:00 — tool_limit_illusion_v1
+```json
+{
+  "timestamp": "2026-03-11T12:57:37+01:00",
+  "category": "tool",
+  "severity": "high",
+  "description": "Queued: Tools not available but no error",
+  "context": "Auto-detected from session",
+  "root_cause": "Tool-Limit nicht erkannt",
+  "prevention": "See pattern history",
+  "depth": "context"
+}
+```
+
+### 2026-03-15T00:55:00+01:00 — sutra_overwrite_v1
+```json
+{
+  "timestamp": "2026-03-15T00:55:00+01:00",
+  "category": "memory",
+  "severity": "critical",
+  "description": "sutra_session_memory.jsonl mit write-Tool überschrieben statt angehängt — vorherige Session-Daten verloren",
+  "context": "Manuelles Session-Ende-Protokoll",
+  "root_cause": "write-Tool überschreibt immer, append nicht verfügbar; falsches Tool für JSONL-Dateien",
+  "prevention": "NIE write für JSONL verwenden; IMMER sutra_manual_entry.py oder sutra_extractor.py verwenden; Backup vor manuellen Änderungen",
+  "depth": "structural"
+}
+```

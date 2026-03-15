@@ -76,7 +76,7 @@ def generate_summary(messages):
 def append_to_sutra(session_id, essence):
     """Füge extrahierte Essenz zu sutra_session_memory.jsonl hinzu"""
     
-    sutra_path = Path('/data/.openclaw/workspace/neuron/sutra_session_memory.jsonl')
+    sutra_path = Path('{Path(__file__).parent / 'neuron'}/sutra_session_memory.jsonl')
     
     # Duplikat-Check
     if session_exists(sutra_path, session_id):

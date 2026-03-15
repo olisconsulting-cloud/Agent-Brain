@@ -2,14 +2,41 @@
   "ouroboros_id": "v35_ouro_001",
   "version": "3.5",
   "created": "2026-03-14T00:00:00Z",
-  "active_mutations": [],
-  "completed_mutations": 0,
+  "active_mutations": [
+    {
+      "id": "mut_001",
+      "type": "threshold_adjustment",
+      "target": "anti_pattern_detection",
+      "description": "Erhöhe Sensitivität für Anti-Pattern-Erkennung",
+      "reason": "Nur 2 Einträge in 4 Tagen — zu wenig",
+      "status": "completed",
+      "created": "2026-03-15T00:42:00Z",
+      "completed_at": "2026-03-15T00:58:00Z"
+    },
+    {
+      "id": "mut_002",
+      "type": "tool_safety",
+      "target": "session_end_protocol",
+      "description": "Erzwinge sutra_manual_entry.py für alle Session-Ende-Operationen",
+      "reason": "Kritischer Fehler: write-Tool überschrieb sutra_session_memory.jsonl",
+      "status": "active",
+      "created": "2026-03-15T00:58:00Z",
+      "enforcement": {
+        "block_direct_write": true,
+        "require_backup": true,
+        "mandatory_tool": "sutra_manual_entry.py"
+      }
+    }
+  ],
+  "completed_mutations": 1,
   "rolled_back_mutations": 0,
   "current_thresholds": {
-    "quality_trigger": 0.8,
-    "reflection_depth": "standard",
-    "pattern_confidence": 0.9
+    "quality_trigger": 0.75,
+    "reflection_depth": "enhanced",
+    "pattern_confidence": 0.85,
+    "anti_pattern_sensitivity": "high"
   },
   "status": "operational",
-  "last_review": "2026-03-14T00:00:00Z"
+  "last_review": "2026-03-15T00:42:00Z",
+  "notes": "Post-Audit Activation: System wurde nach tiefem Audit reaktiviert"
 }

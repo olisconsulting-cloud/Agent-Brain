@@ -18,10 +18,10 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from collections import Counter
 
-WORKSPACE = Path('/data/.openclaw/workspace')
+WORKSPACE = Path(__file__).parent
 LOGS_DIR = WORKSPACE / 'logs'
 NEURON_DIR = WORKSPACE / 'neuron'
-SMRITI_DIR = WORKSPACE / 'smriti'
+SMRITI_DIR = WORKSPACE
 
 def log(message, level='INFO'):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

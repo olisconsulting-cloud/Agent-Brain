@@ -1,11 +1,27 @@
 {
   "bridge_id": "v35_bridge_001",
   "created": "2026-03-14T00:00:00Z",
-  "active_mutations": [],
-  "pending_patterns": [],
+  "active_mutations": ["mut_001", "mut_002"],
+  "pending_patterns": [
+    {
+      "id": "pat_001",
+      "source": "anti_pattern_migration",
+      "description": "Legacy Anti-Patterns migriert",
+      "confidence": 0.95,
+      "detected": "2026-03-15T00:42:00Z"
+    },
+    {
+      "id": "pat_002",
+      "source": "sutra_overwrite_incident",
+      "description": "write-Tool überschrieb JSONL — Sicherheitsprotokoll erforderlich",
+      "confidence": 0.99,
+      "detected": "2026-03-15T00:55:00Z"
+    }
+  ],
   "conflicts": [],
-  "learning_cycles": 0,
-  "last_sync": "2026-03-14T00:00:00Z",
+  "learning_cycles": 2,
+  "last_sync": "2026-03-15T00:58:00Z",
   "status": "operational",
-  "version": "3.5"
+  "version": "3.5",
+  "notes": "Cycle 2: Sutra-Sicherheitsprotokoll implementiert, Anti-Pattern geloggt"
 }

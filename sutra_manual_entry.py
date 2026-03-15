@@ -16,8 +16,8 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-SUTRA_PATH = Path('/data/.openclaw/workspace/neuron/sutra_session_memory.jsonl')
-BACKUP_DIR = Path('/data/.openclaw/workspace/neuron/backup')
+SUTRA_PATH = Path(__file__).parent / 'neuron' / 'sutra_session_memory.jsonl'
+BACKUP_DIR = Path(__file__).parent / 'neuron' / 'backup'
 
 def ensure_backup():
     """Erstelle Backup vor Änderungen"""

@@ -15,7 +15,7 @@ from collections import Counter
 
 def load_sutra():
     """Lade alle Sutra-Einträge"""
-    sutra_path = Path('/data/.openclaw/workspace/neuron/sutra_session_memory.jsonl')
+    sutra_path = Path('{Path(__file__).parent / 'neuron'}/sutra_session_memory.jsonl')
     
     if not sutra_path.exists():
         return []
@@ -188,7 +188,7 @@ def save_consolidated(entries, analysis, mutations, thresholds):
         'entries': entries[-20:]  # Letzte 20
     }
     
-    output_path = Path('/data/.openclaw/workspace/neuron/sutra_consolidated.json')
+    output_path = Path('{Path(__file__).parent / 'neuron'}/sutra_consolidated.json')
     with open(output_path, 'w') as f:
         json.dump(consolidated, f, indent=2, ensure_ascii=False)
     
@@ -197,7 +197,7 @@ def save_consolidated(entries, analysis, mutations, thresholds):
 def main():
     """Hauptfunktion: Nightly-Konsolidierung"""
     
-    log_file = Path('/data/.openclaw/workspace/smriti/logs/sutra_nightly.log')
+    log_file = Path(__file__).parent / 'logs' / 'sutra_nightly.log'
     log_file.parent.mkdir(parents=True, exist_ok=True)
     
     def log(msg):
@@ -230,7 +230,7 @@ def main():
         entry1, entry2, sim = similar[0]
         
         # Backup vor Merge
-        sutra_path = Path('/data/.openclaw/workspace/neuron/sutra_session_memory.jsonl')
+        sutra_path = Path('{Path(__file__).parent / 'neuron'}/sutra_session_memory.jsonl')
         backup_path = sutra_path.with_suffix('.jsonl.bak')
         import shutil
         shutil.copy(sutra_path, backup_path)
